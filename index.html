@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roblox Challenge Lab</title>
+
+<style>
+:root {
+  --bg: #080b16;
+  --panel: #11182b;
+  --cyan: #41e7ff;
+  --purple: #9b72ff;
+  --text: #f4f7ff;
+  --muted: #a6b1ca;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at top, #172650 0%, transparent 55%),
+    var(--bg);
+}
+
+button, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+select:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 7%;
+  border-bottom: 1px solid #26314d;
+  background: rgba(8, 11, 22, 0.85);
+}
+
+.logo {
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.logo span {
+  color: var(--cyan);
+}
+
+.status {
+  color: #8fffd0;
+  font-size: 12px;
+  border: 1px solid #246b5d;
+  background: #102c2b;
+  padding: 8px 12px;
+  border-radius: 50px;
+}
+
+main {
+  width: min(900px, 92%);
+  margin: 0 auto;
+  padding: 55px 0 35px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.eyebrow {
+  color: var(--cyan);
+  letter-spacing: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: clamp(36px, 7vw, 64px);
+  line-height: 1.05;
+  margin: 18px 0;
+  letter-spacing: -2px;
+}
+
+h1 span {
+  color: var(--cyan);
+  text-shadow: 0 0 25px #41e7ff44;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.panel {
+  padding: 28px;
+  border: 1px solid #293858;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #151e34, #0d1221);
+  box-shadow: 0 20px 70px #0005;
+}
+
+.section-label {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+.modes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+  margin-bottom: 27px;
+}
+
+.mode {
+  padding: 13px 5px;
+  border: 1px solid #34415f;
+  border-radius: 11px;
+  color: var(--muted);
+  background: #10172a;
+  font-size: 13px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.mode:hover {
+  border-color: var(--cyan);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.mode.active {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  background: #123044;
+  box-shadow: 0 0 18px #41e7ff15;
+}
+
+.challenge-card {
+  text-align: center;
+  padding: 32px 20px;
+  border-radius: 16px;
+  border: 1px solid #34405f;
+  background:
+    radial-gradient(circle at top, #263b63 0%, transparent 75%),
+    #0b1020;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.challenge-card.pop {
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.98); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.challenge-tag {
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+#challengeTitle {
+  font-size: clamp(24px, 4vw, 34px);
+  margin: 17px 0 12px;
+}
+
+#challengeDescription {
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0 auto;
+  max-width: 530px;
+}
+
+.main-button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 17px;
+  border: 0;
+  border-radius: 12px;
+  color: #07101a;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  background: linear-gradient(100deg, var(--cyan), #83f7d5);
+  box-shadow: 0 0 25px #41e7ff20;
+  transition: 0.2s;
+}
+
+.main-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px #41e7ff50;
+}
+
+.main-button:active {
+  transform: scale(0.99);
+}
+
+.secondary-button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 13px;
+  color: var(--text);
+  border: 1px solid #34415f;
+  border-radius: 11px;
+  background: #151e34;
+  font-weight: bold;
+}
+
+.secondary-button:hover {
+  border-color: var(--purple);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.stat {
+  text-align: center;
+  padding: 18px 10px;
+  border: 1px solid #293858;
+  border-radius: 13px;
+  background: #10172a;
+}
+
+.stat-number {
+  display: block;
+  color: var(--cyan);
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.stat-label {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 7px;
+  letter-spacing: 1px;
+}
+
+.tips {
+  margin-top: 25px;
+  padding: 22px;
+  border: 1px solid #293858;
+  border-radius: 16px;
+  background: #10172a;
+}
+
+.tips h2 {
+  font-size: 16px;
+  margin-top: 0;
+}
+
+.tips p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+
+#message {
+  min-height: 20px;
+  margin-top: 12px;
+  text-align: center;
+  font-size: 13px;
+  color: #8fffd0;
+}
+
+footer {
+  padding: 25px 15px;
+  text-align: center;
+  color: #77839f;
+  font-size: 12px;
+  border-top: 1px solid #202a43;
+}
+
+@media (max-width: 520px) {
+  header {
+    padding: 17px 5%;
+  }
+
+  .logo {
+    font-size: 15px;
+  }
+
+  main {
+    padding-top: 38px;
+  }
+
+  .panel {
+    padding: 17px;
+  }
+
+  .modes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .challenge-card {
+    padding: 26px 14px;
+  }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">ROBLOX <span>CHALLENGE LAB</span></div>
+  <div class="status">● READY TO PLAY</div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">YOUR NEXT MISSION STARTS HERE</div>
+    <h1>ENTER THE <span>CHALLENGE.</span></h1>
+    <p class="subtitle">
+      Get a random gaming mission, test your skills,
+      and see if you can beat the challenge.
+    </p>
+  </section>
+
+  <section class="panel">
+    <label class="section-label">01 / CHOOSE YOUR MODE</label>
+
+    <div class="modes" aria-label="Challenge modes">
+      <button class="mode active" data-mode="All">🎲 All</button>
+      <button class="mode" data-mode="Easy">🟢 Easy</button>
+      <button class="mode" data-mode="Medium">🟡 Medium</button>
+      <button class="mode" data-mode="Hard">🔴 Hard</button>
+    </div>
+
+    <label class="section-label">02 / YOUR RANDOM MISSION</label>
+
+    <div class="challenge-card" id="challengeCard"
+         aria-live="polite">
+      <div class="challenge-tag" id="challengeTag">
+        READY FOR ACTION
+      </div>
+      <h2 id="challengeTitle">Your mission awaits.</h2>
+      <p id="challengeDescription">
+        Choose a mode and generate your first challenge.
+      </p>
+    </div>
+
+    <button class="main-button" id="generateButton">
+      ⚡ GENERATE CHALLENGE
+    </button>
+
+    <button class="secondary-button" id="copyButton">
+      📋 COPY CHALLENGE
+    </button>
+
+    <div id="message" role="status"></div>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number" id="totalCount">0</span>
+        <span class="stat-label">CHALLENGES GENERATED</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number" id="modeName">ALL</span>
+        <span class="stat-label">CURRENT MODE</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="tips">
+    <h2>🎯 HOW TO PLAY</h2>
+    <p>
+      1. Select a difficulty mode.<br>
+      2. Generate a random mission.<br>
+      3. Open your game and try to complete it.<br>
+      4. Copy the mission to share it with friends.<br>
+      5. Generate another mission and keep playing!
+    </p>
+  </section>
+</main>
+
+<footer>
+  ROBLOX CHALLENGE LAB · BUILT FOR GAMERS
+  <br><br>
+  Fan-made challenge generator. Not affiliated with Roblox.
+</footer>
+
+<script>
+
+const challenges = [
+  {title:"PISTOL DEMON",description:"Win a full duel using only your pistol. Switch weapons and you fail!",mode:"Hard"},
+  {title:"SNIPER NIGHTMARE",description:"Get 5 eliminations using only a sniper. No backup weapons allowed!",mode:"Hard"},
+  {title:"FIVE-KILL STREAK",description:"Get 5 eliminations in a row without being eliminated once.",mode:"Hard"},
+  {title:"MOVEMENT MONSTER",description:"Get 5 eliminations while moving. No camping allowed!",mode:"Hard"},
+  {title:"CURSED LOADOUT",description:"Use your least-practised weapon and try to win a full duel with it.",mode:"Hard"},
+  {title:"NO RELOAD PANIC",description:"Get 2 eliminations without reloading between them. Pick a suitable weapon.",mode:"Hard"},
+  {title:"COMEBACK KING",description:"Fall behind, then try to finish the match with more eliminations than deaths.",mode:"Hard"},
+  {title:"ONE LIFE, FIVE KILLS",description:"Get 5 eliminations in one life. If eliminated, restart!",mode:"Hard"},
+  {title:"RANDOM WEAPON BOSS",description:"Choose one weapon you own at random. Use only that weapon and try to win.",mode:"Hard"},
+  {title:"ACCURACY GOD",description:"Get 5 eliminations using careful, accurate shots instead of careless spraying.",mode:"Hard"},
+  {title:"RIVALS: PISTOL DUEL",description:"Challenge a willing friend to a pistol-only duel. First to 5 eliminations wins if supported.",mode:"Rivals"},
+  {title:"RIVALS: SNIPER SHOWDOWN",description:"Challenge a friend to a sniper-only duel using weapons you both own.",mode:"Rivals"},
+  {title:"RIVALS: BEST OF THREE",description:"Play 3 duels against a friend. Use a different weapon restriction each round.",mode:"Rivals"},
+  {title:"RIVALS: REVENGE ARC",description:"If the same opponent eliminates you twice, try to beat them in your next encounter.",mode:"Rivals"},
+  {title:"RIVALS: LOADOUT LOCK",description:"Choose your loadout before the duel. Keep it unchanged and try to win.",mode:"Rivals"},
+  {title:"RIVALS: FIVE IN ONE LIFE",description:"Get 5 eliminations in one life without changing your weapon, if possible.",mode:"Rivals"},
+  {title:"RIVALS: MOVEMENT MASTER",description:"Try to win a duel using movement mechanics available in your match.",mode:"Rivals"},
+  {title:"RIVALS: THE TOURNAMENT",description:"Challenge a willing friend to 3 duels. Try to win all 3.",mode:"Rivals"},
+  {title:"RIVALS: RANDOM RESTRICTION",description:"Choose pistol-only, no camping, or one-weapon-only before the match.",mode:"Rivals"},
+  {title:"RIVALS: UNTOUCHABLE",description:"Get 4 eliminations in one life without being eliminated yourself.",mode:"Rivals"},
+  {title:"THE UNLUCKY WHEEL",description:"Randomly pick a restriction: pistol-only, no camping, or one life. Complete it!",mode:"Hard"},
+  {title:"THE FINAL BOSS",description:"Play a best-of-three duel with a friend. Losing a round means changing your restriction.",mode:"Hard"},
+  {title:"THE COMBO MASTER",description:"Get 3 eliminations using 3 different weapons, if your loadout allows it.",mode:"Hard"},
+  {title:"THE CLUTCH TEST",description:"Try to win a close match when you're behind. No quitting allowed!",mode:"Hard"},
+  {title:"THE UNDERDOG",description:"Use a weapon you rarely choose and try to win a full round.",mode:"Hard"}
+];
+
+let selectedMode = "All";
+let previousChallenge = null;
+let generatedCount = 0;
+let currentChallenge = null;
+
+const title = document.getElementById("challengeTitle");
+const description = document.getElementById("challengeDescription");
+const tag = document.getElementById("challengeTag");
+const card = document.getElementById("challengeCard");
+const message = document.getElementById("message");
+
+document.querySelectorAll(".mode").forEach(button => {
+  button.addEventListener("click", () => {
+    selectedMode = button.dataset.mode;
+
+    document.querySelectorAll(".mode").forEach(item => {
+      item.classList.toggle("active", item === button);
+    });
+
+    document.getElementById("modeName").textContent =
+      selectedMode.toUpperCase();
+
+    message.textContent = "";
+
+    if (currentChallenge && !matchesMode(currentChallenge)) {
+      title.textContent = "Ready for a new mission?";
+      description.textContent =
+        "Press Generate Challenge to get a mission for " +
+        selectedMode + " mode.";
+      tag.textContent = "MODE CHANGED";
+      currentChallenge = null;
+    }
+  });
+});
+
+function matchesMode(challenge) {
+  if (selectedMode === "All") return true;
+
+  if (selectedMode === "Rivals") {
+    return challenge.mode === "Rivals";
+  }
+
+  return challenge.mode === selectedMode;
+}
+
+function generateChallenge() {
+  let available = challenges.filter(matchesMode);
+
+  if (available.length === 0) {
+    message.textContent = "No challenges available in this mode.";
+    return;
+  }
+
+  if (available.length > 1) {
+    available = available.filter(item => item !== previousChallenge);
+  }
+
+  const challenge =
+    available[Math.floor(Math.random() * available.length)];
+
+  currentChallenge = challenge;
+  previousChallenge = challenge;
+  generatedCount++;
+
+  tag.textContent =
+    challenge.mode.toUpperCase() + " MISSION";
+
+  title.textContent = challenge.title;
+  description.textContent = challenge.description;
+
+  document.getElementById("totalCount").textContent = generatedCount;
+  message.textContent = "";
+
+  card.classList.remove("pop");
+  void card.offsetWidth;
+  card.classList.add("pop");
+}
+
+document.getElementById("generateButton")
+  .addEventListener("click", generateChallenge);
+
+document.getElementById("copyButton")
+  .addEventListener("click", async () => {
+    if (!currentChallenge) {
+      message.textContent = "Generate a challenge first!";
+      return;
+    }
+
+    const textToCopy =
+      currentChallenge.title + "\n" +
+      currentChallenge.description;
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(textToCopy);
+      } else {
+        const temporary = document.createElement("textarea");
+        temporary.value = textToCopy;
+        temporary.style.position = "fixed";
+        temporary.style.left = "-9999px";
+        document.body.appendChild(temporary);
+        temporary.select();
+
+        const copied = document.execCommand("copy");
+        temporary.remove();
+
+        if (!copied) throw new Error("Copy failed");
+      }
+
+      message.textContent = "Challenge copied! Share it with a friend.";
+    } catch (error) {
+      message.textContent =
+        "Copy didn't work. Select the challenge text and copy it manually.";
+    }
+  });
+</script>
+</body>
+</html>
